@@ -1,17 +1,37 @@
 import React from "react";
 
-const Home = () => {
+import { client } from "../lib/client";
+import { Product, Footerbanner, Herobanner } from "../components";
+
+const Home = ({ products, bannerData }) => {
   return (
-    <>
-      HeroBanner
-      <div>
+    <div>
+      <Herobanner heroBanner={bannerData.length && bannerData[0]} />
+      {console.log(bannerData)}
+      <div className="products-heading">
         <h2>All Products</h2>
         <p>Fun creations we make on a regular basis</p>
       </div>
-      <div>{["Prodcut 1", "Product 2"].map((product) => product)}</div>
+      <div className="products-container">
+        {products?.map((product) => product.name)}
+      </div>
       Footer
-    </>
+    </div>
   );
 };
 
+export const getServerSideProps = async () => {
+  const query = '*[_type == "product"]';
+  const products = await client.fetch(query);
+
+  const bannerQuery = '*[_type == "banner"]'; // Reciving data from Sanity information inserted from mangement end
+  const bannerData = await client.fetch(bannerQuery);
+
+  return {
+    props: {
+      products,
+      bannerData,
+    },
+  };
+};
 export default Home;
