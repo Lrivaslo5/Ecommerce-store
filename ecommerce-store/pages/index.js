@@ -13,13 +13,16 @@ const Home = ({ products, bannerData }) => {
         <p>Fun creations we make on a regular basis</p>
       </div>
       <div className="products-container">
-        {products?.map((product) => product.name)}
+        {products?.map((product) => (
+          <Product key={product._id} product={product} />
+        ))}
       </div>
-      Footer
+      <Footerbanner Footerbanner={bannerData && bannerData[0]} />
+      {/* If banner data exists */}
     </div>
   );
 };
-
+//used whenever fetching data from api
 export const getServerSideProps = async () => {
   const query = '*[_type == "product"]';
   const products = await client.fetch(query);

@@ -12,7 +12,7 @@ function Herobanner({ heroBanner }) { //<--  inputing data pulled from sanity da
             <img src ={urlFor(heroBanner.image)} alt ="pinata" className="hero-banner-image" />
         </div>
         <div>
-            {/* Calling product speciffed in database */}
+            {/* Calling product speciffed in database , also look to get rid of ID?*/}
             <Link href={'/product/ID/${heroBanner.product}'}> 
                 <button type="button">{heroBanner.buttonText}</button>
             </Link>
