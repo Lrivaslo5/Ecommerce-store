@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 // brackets indicate that this slug is dynamic -> uses file-based routing next.js feature
 
-import React from "react";
+import React, { useState } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -8,39 +10,52 @@ import {
   AiOutlineStar,
 } from "react-icons/ai";
 import { client, urlFor } from "../../lib/client";
+import { Product } from "../../components";
 
 const ProductDetails = ({ product, products }) => {
   // We will make an API call to get specific slug to specify product data
+
   const { image, name, details, price } = product;
+
+  const [index, setIndex] = useState(0);
+
   return (
     <div>
-      <div className="product-detail">
-        <div>
-          <div className="image-container">
-            <img src={urlFor(image && image[0])} />
-            {/* <div className="small-images-container">
-                {image?.map((item, i) => (
-                    <img
-                    src={urlFor(item)}
-                    className=""
-                    onMouseEnter=""
-                    />
-                ))}
-
-            </div> */}
+      <div className="product-detail-container">
+        <div className="image-container">
+          <img
+            src={urlFor(image && image[index])}
+            className="product-detail-image"
+          />
+          <div className="small-images-container">
+            {image?.map(
+              (
+                item,
+                i // Enabling small images to be referenced when hovered over
+              ) => (
+                // eslint-disable-next-line react/jsx-key
+                <img
+                  src={urlFor(item)}
+                  className={
+                    i === index ? "small-image selected-image" : "small-image"
+                  }
+                  onMouseEnter={() => setIndex(i)}
+                />
+              )
+            )}
           </div>
-          <div className="product-details-desc">
-            <h1>{name}</h1>
-            <div className="reviews">
-              <div>
-                <AiFillStar />
-                <AiFillStar />
-                <AiFillStar />
-                <AiFillStar />
-                <AiOutlineStar />
-              </div>
-              <p>(20)</p>
+        </div>
+        <div className="product-detail-desc">
+          <h1>{name}</h1>
+          <div className="reviews">
+            <div>
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiOutlineStar />
             </div>
+            <p>(20)</p>
           </div>
           <h4>Details:</h4>
           <p>{details}</p>
@@ -58,6 +73,24 @@ const ProductDetails = ({ product, products }) => {
                 <AiOutlinePlus />
               </span>
             </p>
+          </div>
+          <div className="buttons">
+            <button type="button" className="add-to-cart" onClick="">
+              Add to Cart
+            </button>
+            <button type="button" className="buy-now" onClick="">
+              Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="maylike-products-wrapper">
+        <h2>You may also like</h2>
+        <div className="marquee">
+          <div className="maylike-products-container track">
+            {products.map((item) => (
+              <Product key={item._id} product={item} /> // implmentation of suggested items
+            ))}
           </div>
         </div>
       </div>
