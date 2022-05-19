@@ -52,6 +52,22 @@ export const StateContext = ({ children }) => {
     });
   };
 
+  //creating a new cart item without the one we are removing
+  const onRemove = (product) => {
+    foundProduct = cartItems.find((item) => item._id === product._id); //we can select product we want
+    const newCartItems = cartItems.filter((item) => item._id !== product._id);
+
+    setTotalPrice(
+      (prevTotalPrice) =>
+        prevTotalPrice - foundProduct.price * foundProduct.quantity
+    );
+    setTotalPrice(
+      (prevTotalQuantities) => prevTotalQuantities - foundProduct.quanitiy
+    );
+
+    setCartItems(newCartItems);
+  };
+
   // accepts id and value of our product we are working with, will allow us to add/subtract product quantities in cart
   const toggleCartItemQuantity = (id, value) => {
     foundProduct = cartItems.find((item) => item._id === id); //we can select product we want
@@ -94,6 +110,7 @@ export const StateContext = ({ children }) => {
         decQty,
         onAdd,
         toggleCartItemQuantity,
+        onRemove,
       }}
     >
       {children}
