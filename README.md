@@ -3,5 +3,5 @@ Creating an ecommerece store using Next.JS with Stripe payment processing integr
 
 
 
-live site hosted on vercel: http://ecommerce-store-orpin-six.vercel.app/
+live site hosted on vercel: [http://ecommerce-store-orpin-six.vercel.app/](https://ecommerce-store-v2.vercel.app/)
 
