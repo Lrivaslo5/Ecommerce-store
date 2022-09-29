@@ -13,7 +13,7 @@ function Herobanner({ heroBanner }) { //<--  inputing data pulled from sanity da
         </div>
         <div>
             {/* Calling product specified in database , also look to get rid of ID?*/}
-            <Link href={`/product/ID/${heroBanner.product}`}> 
+            <Link href={`/product/${heroBanner.product}`}> 
                 <button type="button">{heroBanner.buttonText}</button>
             </Link>
             <div className='desc'>
